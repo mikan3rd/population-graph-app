@@ -1,10 +1,14 @@
 import { trpc } from "@/utils/trpc";
 
 export const Index = () => {
-  const [data] = trpc.hello.useSuspenseQuery({ text: "client" });
+  const [data] = trpc.getPrefectures.useSuspenseQuery();
   return (
     <div>
-      <p>{data.greeting}</p>
+      {data.result.map((prefecture) => (
+        <div key={prefecture.prefCode}>
+          {prefecture.prefCode}: {prefecture.prefName}
+        </div>
+      ))}
     </div>
   );
 };
