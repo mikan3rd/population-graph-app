@@ -1,19 +1,8 @@
-import { z } from "zod";
-
-import { procedure, router } from "../trpc";
+import { getPrefectures } from "@/server/routers/getPrefectures";
+import { router } from "@/server/trpc";
 
 export const appRouter = router({
-  hello: procedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query((opts) => {
-      return {
-        greeting: `hello ${opts.input.text}`,
-      };
-    }),
+  getPrefectures,
 });
 
 // export type definition of API
