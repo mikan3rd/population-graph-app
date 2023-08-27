@@ -10,7 +10,7 @@ export const Index = () => {
         <div
           key={prefecture.prefCode}
           className={css`
-            color: blue;
+            /* color: blue; */
           `}
         >
           {prefecture.prefCode}: {prefecture.prefName}
