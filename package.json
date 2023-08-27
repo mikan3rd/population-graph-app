@@ -10,8 +10,8 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
-    "lint": "next lint --fix",
-    "lint:fix": "eslint --max-warnings=0",
+    "lint": "eslint --max-warnings=0",
+    "lint:check": "next lint --fix",
     "format": "prettier . --write",
     "format:check": "prettier --check ."
   },
