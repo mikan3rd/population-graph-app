@@ -6,11 +6,11 @@ import { trpc } from "@/utils/trpc";
 export const Index = () => {
   const [data] = trpc.getPrefectures.useSuspenseQuery();
 
-  const [checkedPrefCodes, setCheckedPrefCodes] = useState<number[]>([]);
+  const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
 
   const prefectures = data.result.map((prefecture) => ({
     ...prefecture,
-    checked: checkedPrefCodes.includes(prefecture.prefCode),
+    checked: checkedPrefCodes.has(prefecture.prefCode),
   }));
 
   const handleChangeCheckedCode = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,11 +18,15 @@ export const Index = () => {
       target: { checked, value },
     } = event;
     const prefCode = Number(value);
-    if (checked) {
-      setCheckedPrefCodes((prev) => [...prev, prefCode]);
-    } else {
-      setCheckedPrefCodes((prev) => prev.filter((code) => code !== prefCode));
-    }
+    setCheckedPrefCodes((prev) => {
+      const next = new Set(prev);
+      if (checked) {
+        next.add(prefCode);
+      } else {
+        next.delete(prefCode);
+      }
+      return next;
+    });
   }, []);
 
   return (
