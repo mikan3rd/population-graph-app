@@ -1,8 +1,5 @@
 {
   "prettier.enable": true,
-  "stylelint.validate": [
-    "typescriptreact"
-  ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
@@ -15,5 +12,14 @@
   "cSpell.words": [
     "Linaria",
     "Resas"
-  ]
+  ],
+  "stylelint.validate": [
+    "typescript",
+    "typescriptreact"
+  ],
+  "stylelint.enable": true,
+  "stylelint.packageManager": "yarn",
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
 }
