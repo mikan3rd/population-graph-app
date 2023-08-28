@@ -34,7 +34,13 @@ export const Index = () => {
       {prefectures.map((prefecture) => {
         const { prefCode, prefName, checked } = prefecture;
         return (
-          <Checkbox key={prefCode} checked={checked} value={prefCode} onChange={handleChangeCheckedCode}>
+          <Checkbox
+            key={prefCode}
+            id={`checkbox_pref_${prefCode}`}
+            checked={checked}
+            value={prefCode}
+            onChange={handleChangeCheckedCode}
+          >
             {prefName}
           </Checkbox>
         );
