@@ -1,3 +1,4 @@
+import { css } from "@linaria/core";
 import { useCallback, useState } from "react";
 
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -31,6 +32,7 @@ export const Index = () => {
 
   return (
     <div>
+      <h1>population-graph-app</h1>
       {prefectures.map((prefecture) => {
         const { prefCode, prefName, checked } = prefecture;
         return (
@@ -40,6 +42,9 @@ export const Index = () => {
             checked={checked}
             value={prefCode}
             onChange={handleChangeCheckedCode}
+            className={css`
+              margin: 8px 0 0 8px;
+            `}
           >
             {prefName}
           </Checkbox>
