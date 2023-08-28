@@ -12,6 +12,7 @@
     "type-check": "tsc --noEmit",
     "lint": "next lint --fix",
     "lint:check": "next lint --max-warnings=0",
+    "lint:css": "stylelint src/**/*",
     "format": "prettier . --write",
     "format:check": "prettier --check ."
   },
@@ -34,12 +35,14 @@
     "zod": "3.22.2"
   },
   "devDependencies": {
+    "@linaria/stylelint-config-standard-linaria": "4.5.1",
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",
     "eslint-import-resolver-typescript": "3.6.0",
     "eslint-plugin-import": "2.28.1",
-    "prettier": "3.0.2"
+    "prettier": "3.0.2",
+    "stylelint": "15.10.3"
   }
 }

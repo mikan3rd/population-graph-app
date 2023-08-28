@@ -14,7 +14,7 @@
 
 ## Getting Started
 
-1. Node.js and yarn must be installed if not already present
+1. Node.js and yarn must be installed if not already present.
    Node.js must match the version specified in the engines in package.json.
    You can use [nodebrew](https://github.com/hokaccha/nodebrew) to switch Node.js versions.
 

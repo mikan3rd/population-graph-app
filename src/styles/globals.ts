@@ -13,7 +13,7 @@ export const globals = css`
       display: none !important;
     }
     :where(html) {
-      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
       color-scheme: dark light;
     }
     @media (prefers-reduced-motion: no-preference) {
@@ -98,7 +98,7 @@ export const globals = css`
       display: none !important;
     }
     :where(html) {
-      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
       color-scheme: dark light;
     }
     @media (prefers-reduced-motion: no-preference) {
