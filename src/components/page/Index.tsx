@@ -33,23 +33,29 @@ export const Index = () => {
   return (
     <div>
       <h1>population-graph-app</h1>
-      {prefectures.map((prefecture) => {
-        const { prefCode, prefName, checked } = prefecture;
-        return (
-          <Checkbox
-            key={prefCode}
-            id={`checkbox_pref_${prefCode}`}
-            checked={checked}
-            value={prefCode}
-            onChange={handleChangeCheckedCode}
-            className={css`
-              margin: 8px 0 0 8px;
-            `}
-          >
-            {prefName}
-          </Checkbox>
-        );
-      })}
+      <div
+        className={css`
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+          gap: 8px;
+          margin-top: 8px;
+        `}
+      >
+        {prefectures.map((prefecture) => {
+          const { prefCode, prefName, checked } = prefecture;
+          return (
+            <Checkbox
+              key={prefCode}
+              id={`checkbox_pref_${prefCode}`}
+              checked={checked}
+              value={prefCode}
+              onChange={handleChangeCheckedCode}
+            >
+              {prefName}
+            </Checkbox>
+          );
+        })}
+      </div>
     </div>
   );
 };
