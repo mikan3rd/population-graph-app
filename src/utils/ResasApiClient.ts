@@ -13,13 +13,31 @@ export class ResasApiClient {
   }
 
   async getPrefectures() {
-    type GetPrefectureResponseType = {
-      message: string;
+    type ResponseType = {
+      message: string | null;
       result: {
         prefCode: number;
         prefName: string;
       }[];
     };
-    return await this.axiosClient.get<GetPrefectureResponseType>("/api/v1/prefectures");
+    return await this.axiosClient.get<ResponseType>("/api/v1/prefectures");
+  }
+
+  async getPopulation(params: { prefCode: number; cityCode: string }) {
+    type ResponseType = {
+      message: string | null;
+      result: {
+        boundaryYear: number;
+        data: {
+          label: string;
+          data: {
+            year: number;
+            value: number;
+            rate?: number;
+          }[];
+        }[];
+      }[];
+    };
+    return await this.axiosClient.get<ResponseType>("/api/v1/population/composition/perYear", { params });
   }
 }
