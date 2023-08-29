@@ -5,7 +5,9 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { trpc } from "@/utils/trpc";
 
 export const Index = () => {
-  const [data] = trpc.getPrefectures.useSuspenseQuery();
+  const [data] = trpc.getPrefectures.useSuspenseQuery(undefined, { retry: 3, cacheTime: Infinity });
+
+  const getPopulationMutation = trpc.getPopulation.useMutation({ retry: 3, cacheTime: Infinity });
 
   const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
 
@@ -14,21 +16,27 @@ export const Index = () => {
     checked: checkedPrefCodes.has(prefecture.prefCode),
   }));
 
-  const handleChangeCheckedCode = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { checked, value },
-    } = event;
-    const prefCode = Number(value);
-    setCheckedPrefCodes((prev) => {
-      const next = new Set(prev);
-      if (checked) {
-        next.add(prefCode);
-      } else {
-        next.delete(prefCode);
-      }
-      return next;
-    });
-  }, []);
+  const handleChangeCheckedCode = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { checked, value },
+      } = event;
+      const prefCode = Number(value);
+
+      setCheckedPrefCodes((prevState) => {
+        const nextState = new Set(prevState);
+        if (checked) {
+          nextState.add(prefCode);
+        } else {
+          nextState.delete(prefCode);
+        }
+        return nextState;
+      });
+
+      await getPopulationMutation.mutateAsync({ prefCode, cityCode: "-" });
+    },
+    [getPopulationMutation],
+  );
 
   return (
     <div>

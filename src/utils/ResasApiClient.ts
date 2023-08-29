@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
+// https://opendata.resas-portal.go.jp/docs/api/v1/index.html
 export class ResasApiClient {
   axiosClient: AxiosInstance;
 
