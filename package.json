@@ -27,6 +27,8 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "axios": "1.5.0",
+    "highcharts": "11.1.0",
+    "highcharts-react-official": "3.2.0",
     "linaria": "4.5.4",
     "next": "13.4.19",
     "next-linaria": "0.11.0",
