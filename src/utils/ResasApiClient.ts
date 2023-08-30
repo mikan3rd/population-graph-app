@@ -37,7 +37,7 @@ export class ResasApiClient {
             rate?: number;
           }[];
         }[];
-      }[];
+      };
     };
     return await this.axiosClient.get<ResponseType>("/api/v1/population/composition/perYear", { params });
   }
