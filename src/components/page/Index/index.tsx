@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { trpc } from "@/utils/trpc";
 
 export const Index = () => {
-  const [data] = trpc.getPrefectures.useSuspenseQuery(undefined, { retry: 3, cacheTime: Infinity });
+  const [data] = trpc.getPrefectures.useSuspenseQuery();
 
   const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
 

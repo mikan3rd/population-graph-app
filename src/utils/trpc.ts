@@ -25,6 +25,21 @@ export const trpc = createTRPCNext<AppRouter>({
           },
         }),
       ],
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            retry: 3,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            cacheTime: Infinity,
+            staleTime: Infinity,
+          },
+          mutations: {
+            retry: 3,
+            cacheTime: Infinity,
+          },
+        },
+      },
     };
   },
   ssr: false,
