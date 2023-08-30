@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
-import { useCallback, useState } from "react";
 
+import { useIndex } from "./index.hook";
 import { useGetPopulationsQueries } from "./useGetPopulationsQueries";
 
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -9,7 +9,7 @@ import { trpc } from "@/utils/trpc";
 export const Index = () => {
   const [data] = trpc.getPrefectures.useSuspenseQuery();
 
-  const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
+  const { checkedPrefCodes, handleChangeCheckedCode } = useIndex();
 
   const populations = useGetPopulationsQueries(checkedPrefCodes);
 
@@ -17,23 +17,6 @@ export const Index = () => {
     ...prefecture,
     checked: checkedPrefCodes.has(prefecture.prefCode),
   }));
-
-  const handleChangeCheckedCode = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { checked, value },
-    } = event;
-    const prefCode = Number(value);
-
-    setCheckedPrefCodes((prevState) => {
-      const nextState = new Set(prevState);
-      if (checked) {
-        nextState.add(prefCode);
-      } else {
-        nextState.delete(prefCode);
-      }
-      return nextState;
-    });
-  }, []);
 
   return (
     <div>
