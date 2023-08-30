@@ -5,7 +5,7 @@ import { ResasApiClient } from "@/utils/ResasApiClient";
 
 export const getPopulation = procedure
   .input(z.object({ prefCode: z.number(), cityCode: z.string() }))
-  .mutation(async (opts) => {
+  .query(async (opts) => {
     const {
       input: { prefCode, cityCode },
     } = opts;
