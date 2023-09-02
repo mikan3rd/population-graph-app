@@ -1,11 +1,21 @@
 import { trpc } from "@/utils/trpc";
 
-export const useGetPopulationsQueries = (prefCodes: Set<number>) => {
-  const prefCodesArray = Array.from(prefCodes);
-
+export const useGetPopulationsQueries = (
+  prefectures: {
+    checked: boolean;
+    prefCode: number;
+    prefName: string;
+  }[],
+) => {
   return trpc.useQueries((t) =>
-    prefCodesArray.map((prefCode) =>
-      t.getPopulation({ prefCode, cityCode: "-" }, { select: (data) => ({ ...data, prefCode }) }),
+    prefectures.map((prefecture) =>
+      t.getPopulation(
+        { prefCode: prefecture.prefCode, cityCode: "-" },
+        {
+          enabled: prefecture.checked,
+          select: (data) => ({ ...data, prefecture }),
+        },
+      ),
     ),
   );
 };

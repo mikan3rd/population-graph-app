@@ -14,33 +14,37 @@ export const Index = () => {
 
   const { checkedPrefCodes, handleChangeCheckedCode } = useIndex();
 
-  const populationsData = useGetPopulationsQueries(checkedPrefCodes);
-
   const prefectures = prefecturesData.result.map((prefecture) => ({
     ...prefecture,
     checked: checkedPrefCodes.has(prefecture.prefCode),
   }));
 
-  const populations = useMemo(() => {
-    const populations: Exclude<NonNullable<(typeof populationsData)[number]["data"]>, undefined>[] = [];
+  const populationsData = useGetPopulationsQueries(prefectures);
+
+  const checkedPopulations = useMemo(() => {
+    const checkedPopulations: Exclude<(typeof populationsData)[number]["data"], undefined>[] = [];
     populationsData.forEach((populationData) => {
       if (populationData.data === undefined) return;
-      populations.push(populationData.data);
+      if (populationData.data.prefecture.checked === false) return;
+      checkedPopulations.push(populationData.data);
     });
-    return populations;
+    return checkedPopulations;
   }, [populationsData]);
 
   const series = useMemo(
     () =>
-      populations.map((population) => {
-        const { prefCode, result } = population;
+      checkedPopulations.map((population) => {
+        const {
+          prefecture: { prefCode, prefName },
+          result,
+        } = population;
         return {
           id: prefCode,
-          name: prefCode,
+          name: prefName,
           data: result.data[0].data.map((d) => [d.year, d.value]),
         };
       }),
-    [populations],
+    [checkedPopulations],
   );
 
   return (
@@ -76,8 +80,11 @@ export const Index = () => {
       </div>
 
       <div>
-        {populations.map((population) => {
-          const { prefCode, result } = population;
+        {checkedPopulations.map((population) => {
+          const {
+            prefecture: { prefCode },
+            result,
+          } = population;
           return (
             <div key={prefCode}>
               <div>{prefCode}</div>
