@@ -1,5 +1,5 @@
 import { css } from "@linaria/core";
-import Highcharts from "highcharts";
+import Highcharts, { Options, SeriesOptionsType } from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
 import { useMemo } from "react";
 
@@ -23,15 +23,20 @@ export const Index = () => {
 
   const checkedPopulations = useMemo(() => {
     const checkedPopulations: Exclude<(typeof populationsData)[number]["data"], undefined>[] = [];
-    populationsData.forEach((populationData) => {
-      if (populationData.data === undefined) return;
-      if (populationData.data.prefecture.checked === false) return;
-      checkedPopulations.push(populationData.data);
+    populationsData.forEach(({ data }) => {
+      if (data === undefined) return;
+      if (data.prefecture.checked === false) return;
+      checkedPopulations.push(data);
     });
     return checkedPopulations;
   }, [populationsData]);
 
-  const series = useMemo(
+  const targetDataIndex = 0; // 変更可能にする
+  const targetLabel = useMemo(() => {
+    return checkedPopulations[0]?.result.data[0]?.label;
+  }, [checkedPopulations]);
+
+  const series: SeriesOptionsType[] = useMemo(
     () =>
       checkedPopulations.map((population) => {
         const {
@@ -41,11 +46,13 @@ export const Index = () => {
         return {
           id: prefCode,
           name: prefName,
-          data: result.data[0].data.map((d) => [d.year, d.value]),
+          data: result.data[targetDataIndex]?.data.map((d) => [d.year, d.value]) ?? [],
         };
       }),
     [checkedPopulations],
   );
+
+  const highchartsOptions: Options = useMemo(() => ({ title: { text: targetLabel }, series }), [series, targetLabel]);
 
   return (
     <div>
@@ -76,22 +83,7 @@ export const Index = () => {
       </div>
 
       <div>
-        <HighchartsReact highcharts={Highcharts} options={{ series }} />
-      </div>
-
-      <div>
-        {checkedPopulations.map((population) => {
-          const {
-            prefecture: { prefCode },
-            result,
-          } = population;
-          return (
-            <div key={prefCode}>
-              <div>{prefCode}</div>
-              <div>{JSON.stringify(result)}</div>
-            </div>
-          );
-        })}
+        <HighchartsReact highcharts={Highcharts} options={highchartsOptions} />
       </div>
     </div>
   );
