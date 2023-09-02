@@ -32,9 +32,7 @@ export const Index = () => {
   }, [populationsData]);
 
   const targetDataIndex = 0; // 変更可能にする
-  const targetLabel = useMemo(() => {
-    return checkedPopulations[0]?.result.data[0]?.label;
-  }, [checkedPopulations]);
+  const targetLabel = useMemo(() => checkedPopulations[0]?.result.data[0]?.label, [checkedPopulations]);
 
   const series: SeriesOptionsType[] = useMemo(
     () =>
@@ -44,7 +42,8 @@ export const Index = () => {
           result,
         } = population;
         return {
-          id: prefCode,
+          type: "line",
+          id: `${prefCode}`,
           name: prefName,
           data: result.data[targetDataIndex]?.data.map((d) => [d.year, d.value]) ?? [],
         };
