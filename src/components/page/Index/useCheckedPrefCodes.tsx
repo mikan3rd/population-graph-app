@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export const useIndex = () => {
+export const useCheckedPrefCodes = () => {
   const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
 
   const handleChangeCheckedCode = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
