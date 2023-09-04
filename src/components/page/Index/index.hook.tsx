@@ -1,11 +1,31 @@
 import { Options, SeriesLineOptions } from "highcharts";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { GetPopulationQueryResultType } from "./useGetPopulationsQueries";
+import {
+  useGetPopulationsQueries,
+  GetPopulationQueryResultType,
+  CheckedPrefectureType,
+} from "./useGetPopulationsQueries";
 
 import { generateColors } from "@/utils/Color";
+import { trpc } from "@/utils/trpc";
 
-export const useCheckedPopulations = (populationsData: GetPopulationQueryResultType[]) => {
+export const useIndex = () => {
+  const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
+
+  const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
+
+  const prefectures: CheckedPrefectureType[] = useMemo(
+    () =>
+      prefecturesData.result.map((prefecture) => ({
+        ...prefecture,
+        checked: checkedPrefCodes.has(prefecture.prefCode),
+      })),
+    [checkedPrefCodes, prefecturesData.result],
+  );
+
+  const populationsData = useGetPopulationsQueries(prefectures);
+
   const checkedPopulations = useMemo(() => {
     const checkedPopulations: Exclude<GetPopulationQueryResultType["data"], undefined>[] = [];
     populationsData.forEach(({ data }) => {
@@ -55,5 +75,22 @@ export const useCheckedPopulations = (populationsData: GetPopulationQueryResultT
     return options;
   }, [highchartsSeries, targetLabel]);
 
-  return { highchartsOptions };
+  const handleChangeCheckedCode = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { checked, value },
+    } = event;
+    const prefCode = Number(value);
+
+    setCheckedPrefCodes((prevState) => {
+      const nextState = new Set(prevState);
+      if (checked) {
+        nextState.add(prefCode);
+      } else {
+        nextState.delete(prefCode);
+      }
+      return nextState;
+    });
+  }, []);
+
+  return { prefectures, highchartsOptions, handleChangeCheckedCode };
 };
