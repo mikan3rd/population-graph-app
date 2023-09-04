@@ -1,5 +1,5 @@
 import { Options, SeriesLineOptions } from "highcharts";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   useGetPopulationsQueries,
@@ -13,6 +13,8 @@ import { trpc } from "@/utils/trpc";
 export const useIndex = () => {
   const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
   const [targetDataIndex, setTargetDataIndex] = useState<number>(0);
+
+  const isInitialized = useRef(false);
 
   const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
 
@@ -72,6 +74,7 @@ export const useIndex = () => {
       yAxis: { title: { text: "人口" } },
       series: highchartsSeries,
       credits: { enabled: false },
+      lang: { noData: "都道府県を選択してください" },
     };
     return options;
   }, [highchartsSeries, targetLabel]);
@@ -100,12 +103,19 @@ export const useIndex = () => {
     [handleSetCheckedPrefCodes],
   );
 
-  // 都道府県のデータ取得時に最初の都道府県のチェックをONにする
+  // 初回のみ都道府県のデータ取得時に最初と最後の都道府県のチェックをONにする
   useEffect(() => {
+    if (isInitialized.current) return;
     if (checkedPrefCodes.size > 0) return;
-    const prefCode = prefecturesData.result[0]?.prefCode;
-    if (prefCode === undefined) return;
-    handleSetCheckedPrefCodes({ prefCode, checked: true });
+    const firstPrefCode = prefecturesData.result[0]?.prefCode;
+    const lastPrefCode = prefecturesData.result[prefecturesData.result.length - 1]?.prefCode;
+    if (firstPrefCode !== undefined) {
+      handleSetCheckedPrefCodes({ prefCode: firstPrefCode, checked: true });
+    }
+    if (lastPrefCode !== undefined) {
+      handleSetCheckedPrefCodes({ prefCode: lastPrefCode, checked: true });
+    }
+    isInitialized.current = true;
   }, [checkedPrefCodes.size, handleSetCheckedPrefCodes, prefecturesData.result]);
 
   return {
