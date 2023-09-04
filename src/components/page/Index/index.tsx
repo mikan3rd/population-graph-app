@@ -1,10 +1,10 @@
 import { css } from "@linaria/core";
 import Highcharts from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
-import { useMemo } from "react";
 
-import { useIndex } from "./index.hook";
-import { useGetPopulationsQueries } from "./useGetPopulationsQueries";
+import { useCheckedPopulations } from "./useCheckedPopulations";
+import { useCheckedPrefCodes } from "./useCheckedPrefCodes";
+import { useGetPopulationsQueries, CheckedPrefectureType } from "./useGetPopulationsQueries";
 
 import { Checkbox } from "@/components/ui/Checkbox";
 import { trpc } from "@/utils/trpc";
@@ -12,36 +12,16 @@ import { trpc } from "@/utils/trpc";
 export const Index = () => {
   const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
 
-  const { checkedPrefCodes, handleChangeCheckedCode } = useIndex();
+  const { checkedPrefCodes, handleChangeCheckedCode } = useCheckedPrefCodes();
 
-  const populationsData = useGetPopulationsQueries(checkedPrefCodes);
-
-  const prefectures = prefecturesData.result.map((prefecture) => ({
+  const prefectures: CheckedPrefectureType[] = prefecturesData.result.map((prefecture) => ({
     ...prefecture,
     checked: checkedPrefCodes.has(prefecture.prefCode),
   }));
 
-  const populations = useMemo(() => {
-    const populations: Exclude<NonNullable<(typeof populationsData)[number]["data"]>, undefined>[] = [];
-    populationsData.forEach((populationData) => {
-      if (populationData.data === undefined) return;
-      populations.push(populationData.data);
-    });
-    return populations;
-  }, [populationsData]);
+  const populationsData = useGetPopulationsQueries(prefectures);
 
-  const series = useMemo(
-    () =>
-      populations.map((population) => {
-        const { prefCode, result } = population;
-        return {
-          id: prefCode,
-          name: prefCode,
-          data: result.data[0].data.map((d) => [d.year, d.value]),
-        };
-      }),
-    [populations],
-  );
+  const { highchartsOptions } = useCheckedPopulations(populationsData);
 
   return (
     <div>
@@ -52,7 +32,7 @@ export const Index = () => {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
           gap: 8px;
-          margin-top: 8px;
+          margin-top: 16px;
         `}
       >
         {prefectures.map((prefecture) => {
@@ -71,20 +51,12 @@ export const Index = () => {
         })}
       </div>
 
-      <div>
-        <HighchartsReact highcharts={Highcharts} options={{ series }} />
-      </div>
-
-      <div>
-        {populations.map((population) => {
-          const { prefCode, result } = population;
-          return (
-            <div key={prefCode}>
-              <div>{prefCode}</div>
-              <div>{JSON.stringify(result)}</div>
-            </div>
-          );
-        })}
+      <div
+        className={css`
+          margin-top: 16px;
+        `}
+      >
+        <HighchartsReact highcharts={Highcharts} options={highchartsOptions} />
       </div>
     </div>
   );

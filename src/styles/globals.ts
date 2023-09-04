@@ -233,4 +233,3 @@ export const globals = css`
     }
   }
 `;
-/* stylelint-enable no-duplicate-selectors */

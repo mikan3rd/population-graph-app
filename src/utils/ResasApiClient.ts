@@ -13,6 +13,7 @@ export class ResasApiClient {
     });
   }
 
+  // https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
   async getPrefectures() {
     type ResponseType = {
       message: string | null;
@@ -24,6 +25,7 @@ export class ResasApiClient {
     return await this.axiosClient.get<ResponseType>("/api/v1/prefectures");
   }
 
+  // https://opendata.resas-portal.go.jp/docs/api/v1/population/composition/perYear.html
   async getPopulation(params: { prefCode: number; cityCode: string }) {
     type ResponseType = {
       message: string | null;

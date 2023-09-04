@@ -1,11 +1,27 @@
+import { UseTRPCQueryResult } from "@trpc/react-query/shared";
+
 import { trpc } from "@/utils/trpc";
 
-export const useGetPopulationsQueries = (prefCodes: Set<number>) => {
-  const prefCodesArray = Array.from(prefCodes);
+type PrefectureType = RouterOutputs["getPrefectures"]["result"][number];
+export type CheckedPrefectureType = PrefectureType & { checked: boolean };
 
+type GetPopulationResponseType = RouterOutputs["getPopulation"];
+type GetPopulationQuerySelectType = GetPopulationResponseType & { prefecture: CheckedPrefectureType };
+export type GetPopulationQueryResultType = UseTRPCQueryResult<GetPopulationQuerySelectType, ClientError>;
+
+export const useGetPopulationsQueries = (prefectures: CheckedPrefectureType[]) => {
   return trpc.useQueries((t) =>
-    prefCodesArray.map((prefCode) =>
-      t.getPopulation({ prefCode, cityCode: "-" }, { select: (data) => ({ ...data, prefCode }) }),
+    prefectures.map((prefecture) =>
+      t.getPopulation(
+        { prefCode: prefecture.prefCode, cityCode: "-" },
+        {
+          enabled: prefecture.checked,
+          select: (data) => {
+            const result: GetPopulationQuerySelectType = { ...data, prefecture };
+            return result;
+          },
+        },
+      ),
     ),
   );
 };
