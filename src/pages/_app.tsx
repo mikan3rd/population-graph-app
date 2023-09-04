@@ -1,12 +1,14 @@
 import Highcharts from "highcharts";
-import highchartsAccessibility from "highcharts/modules/accessibility";
+import HighchartsAccessibility from "highcharts/modules/accessibility";
+import HighchartsExporting from "highcharts/modules/exporting";
 import type { AppType } from "next/app";
 
 import "@/styles/globals";
 import { trpc } from "@/utils/trpc";
 
 if (typeof window !== `undefined`) {
-  highchartsAccessibility(Highcharts);
+  HighchartsAccessibility(Highcharts);
+  HighchartsExporting(Highcharts);
 }
 
 const MyApp: AppType = ({ Component, pageProps }) => {

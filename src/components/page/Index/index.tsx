@@ -32,7 +32,7 @@ export const Index = () => {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
           gap: 8px;
-          margin-top: 8px;
+          margin-top: 16px;
         `}
       >
         {prefectures.map((prefecture) => {

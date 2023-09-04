@@ -3,6 +3,8 @@ import { useMemo } from "react";
 
 import { GetPopulationQueryResultType } from "./useGetPopulationsQueries";
 
+import { generateColors } from "@/utils/Color";
+
 export const useCheckedPopulations = (populationsData: GetPopulationQueryResultType[]) => {
   const checkedPopulations = useMemo(() => {
     const checkedPopulations: Exclude<GetPopulationQueryResultType["data"], undefined>[] = [];
@@ -34,7 +36,7 @@ export const useCheckedPopulations = (populationsData: GetPopulationQueryResultT
           id: `${prefCode}`,
           name: prefName,
           data: result.data[targetDataIndex]?.data.map((d) => [d.year, d.value]) ?? [],
-          colorKey: `${prefCode}`,
+          color: generateColors(prefCode),
           showInLegend: true,
         };
         return series;
