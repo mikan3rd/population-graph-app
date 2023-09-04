@@ -7,10 +7,14 @@ import { useIndex } from "./index.hook";
 import { Checkbox } from "@/components/ui/Checkbox";
 
 export const Index = () => {
-  const { prefectures, highchartsOptions, handleChangeCheckedCode } = useIndex();
+  const { prefectures, labels, highchartsOptions, handleChangeCheckedCode } = useIndex();
 
   return (
-    <div>
+    <div
+      className={css`
+        margin: 16px;
+      `}
+    >
       <h1>population-graph-app</h1>
 
       <div

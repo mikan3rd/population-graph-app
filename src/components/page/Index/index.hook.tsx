@@ -1,5 +1,5 @@
 import { Options, SeriesLineOptions } from "highcharts";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   useGetPopulationsQueries,
@@ -12,6 +12,7 @@ import { trpc } from "@/utils/trpc";
 
 export const useIndex = () => {
   const [checkedPrefCodes, setCheckedPrefCodes] = useState<Set<number>>(new Set());
+  const [targetDataIndex, setTargetDataIndex] = useState<number>(0);
 
   const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
 
@@ -40,8 +41,8 @@ export const useIndex = () => {
     () => checkedPopulations[0]?.result.data.map((d, index) => ({ index, name: d.label })) ?? [],
     [checkedPopulations],
   );
-  const targetDataIndex = 0; // 変更可能にする
-  const targetLabel = useMemo(() => labels[targetDataIndex], [labels]);
+
+  const targetLabel = useMemo(() => labels[targetDataIndex], [labels, targetDataIndex]);
 
   const highchartsSeries: SeriesLineOptions[] = useMemo(
     () =>
@@ -61,7 +62,7 @@ export const useIndex = () => {
         };
         return series;
       }),
-    [checkedPopulations],
+    [checkedPopulations, targetDataIndex],
   );
 
   const highchartsOptions: Options = useMemo(() => {
@@ -75,12 +76,8 @@ export const useIndex = () => {
     return options;
   }, [highchartsSeries, targetLabel]);
 
-  const handleChangeCheckedCode = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { checked, value },
-    } = event;
-    const prefCode = Number(value);
-
+  const handleSetCheckedPrefCodes = useCallback((args: { checked: boolean; prefCode: number }) => {
+    const { checked, prefCode } = args;
     setCheckedPrefCodes((prevState) => {
       const nextState = new Set(prevState);
       if (checked) {
@@ -92,5 +89,29 @@ export const useIndex = () => {
     });
   }, []);
 
-  return { prefectures, highchartsOptions, handleChangeCheckedCode };
+  const handleChangeCheckedCode = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { checked, value },
+      } = event;
+      const prefCode = Number(value);
+      handleSetCheckedPrefCodes({ checked, prefCode });
+    },
+    [handleSetCheckedPrefCodes],
+  );
+
+  // 都道府県のデータ取得時に最初の都道府県のチェックをONにする
+  useEffect(() => {
+    if (checkedPrefCodes.size > 0) return;
+    const prefCode = prefecturesData.result[0]?.prefCode;
+    if (prefCode === undefined) return;
+    handleSetCheckedPrefCodes({ prefCode, checked: true });
+  }, [checkedPrefCodes.size, handleSetCheckedPrefCodes, prefecturesData.result]);
+
+  return {
+    prefectures,
+    labels,
+    highchartsOptions,
+    handleChangeCheckedCode,
+  };
 };
