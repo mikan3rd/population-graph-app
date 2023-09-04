@@ -7,7 +7,14 @@ import { useIndex } from "./index.hook";
 import { Checkbox } from "@/components/ui/Checkbox";
 
 export const Index = () => {
-  const { prefectures, labels, highchartsOptions, handleChangeCheckedCode } = useIndex();
+  const {
+    prefectures,
+    labels,
+    targetDataIndex,
+    highchartsOptions,
+    handleChangeCheckedCode,
+    handleChangeTargetDataIndex,
+  } = useIndex();
 
   return (
     <div
@@ -37,6 +44,27 @@ export const Index = () => {
             >
               {prefName}
             </Checkbox>
+          );
+        })}
+      </div>
+
+      <div
+        className={css`
+          margin-top: 16px;
+        `}
+      >
+        {labels.map((label) => {
+          const { index, name } = label;
+          return (
+            <label key={index}>
+              <input
+                type="radio"
+                value={index}
+                checked={targetDataIndex === index}
+                onChange={handleChangeTargetDataIndex}
+              />
+              {name}
+            </label>
           );
         })}
       </div>

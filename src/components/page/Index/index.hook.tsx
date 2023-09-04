@@ -103,6 +103,14 @@ export const useIndex = () => {
     [handleSetCheckedPrefCodes],
   );
 
+  const handleChangeTargetDataIndex = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    const index = Number(value);
+    setTargetDataIndex(index);
+  }, []);
+
   // 初回のみ都道府県のデータ取得時に最初と最後の都道府県のチェックをONにする
   useEffect(() => {
     if (isInitialized.current) return;
@@ -121,7 +129,9 @@ export const useIndex = () => {
   return {
     prefectures,
     labels,
+    targetDataIndex,
     highchartsOptions,
     handleChangeCheckedCode,
+    handleChangeTargetDataIndex,
   };
 };
