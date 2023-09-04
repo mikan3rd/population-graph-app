@@ -2,26 +2,12 @@ import { css } from "@linaria/core";
 import Highcharts from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
 
-import { useCheckedPopulations } from "./useCheckedPopulations";
-import { useCheckedPrefCodes } from "./useCheckedPrefCodes";
-import { useGetPopulationsQueries, CheckedPrefectureType } from "./useGetPopulationsQueries";
+import { useIndex } from "./index.hook";
 
 import { Checkbox } from "@/components/ui/Checkbox";
-import { trpc } from "@/utils/trpc";
 
 export const Index = () => {
-  const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
-
-  const { checkedPrefCodes, handleChangeCheckedCode } = useCheckedPrefCodes();
-
-  const prefectures: CheckedPrefectureType[] = prefecturesData.result.map((prefecture) => ({
-    ...prefecture,
-    checked: checkedPrefCodes.has(prefecture.prefCode),
-  }));
-
-  const populationsData = useGetPopulationsQueries(prefectures);
-
-  const { highchartsOptions } = useCheckedPopulations(populationsData);
+  const { prefectures, highchartsOptions, handleChangeCheckedCode } = useIndex();
 
   return (
     <div>
