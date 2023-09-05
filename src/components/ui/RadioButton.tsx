@@ -6,11 +6,10 @@ type Props = {
   children: React.ReactNode;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "className">;
 
-export const Checkbox = (props: Props) => {
-  const { className, children, id, onChange, ...inputProps } = props;
+export const RadioButton = (props: Props) => {
+  const { className, children, onChange, ...inputProps } = props;
   return (
     <label
-      htmlFor={id}
       className={
         `${className} ` +
         css`
@@ -23,8 +22,7 @@ export const Checkbox = (props: Props) => {
       }
     >
       <input
-        type="checkbox"
-        id={id}
+        type="radio"
         onChange={onChange}
         {...inputProps}
         className={css`
