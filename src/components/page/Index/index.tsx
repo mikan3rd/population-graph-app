@@ -35,7 +35,7 @@ export const Index = () => {
             font-size: 18px;
           `}
         >
-          都道府県を選択してください
+          都道府県を選択してください（複数可）
         </h2>
         <div
           className={css`
