@@ -1,5 +1,5 @@
 import { css } from "@linaria/core";
-import Highcharts from "highcharts";
+import * as Highcharts from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
 
 import { useIndex } from "./index.hook";
@@ -13,6 +13,7 @@ export const Index = () => {
     labels,
     targetDataIndex,
     highchartsOptions,
+    chartComponentRef,
     handleChangeCheckedCode,
     handleChangeTargetDataIndex,
   } = useIndex();
@@ -35,7 +36,7 @@ export const Index = () => {
             font-size: 18px;
           `}
         >
-          都道府県を選択してください
+          都道府県を選択してください（複数可）
         </h2>
         <div
           className={css`
@@ -109,7 +110,7 @@ export const Index = () => {
           margin-top: 32px;
         `}
       >
-        <HighchartsReact highcharts={Highcharts} options={highchartsOptions} />
+        <HighchartsReact highcharts={Highcharts} options={highchartsOptions} ref={chartComponentRef} />
       </div>
     </div>
   );
