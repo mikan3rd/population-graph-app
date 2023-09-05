@@ -40,7 +40,7 @@ export const Index = () => {
         <div
           className={css`
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(91px, 1fr));
             gap: 8px;
             margin-top: 8px;
           `}
@@ -54,6 +54,9 @@ export const Index = () => {
                 checked={checked}
                 value={prefCode}
                 onChange={handleChangeCheckedCode}
+                className={css`
+                  font-size: 12px;
+                `}
               >
                 {prefName}
               </Checkbox>
@@ -90,6 +93,9 @@ export const Index = () => {
                 value={index}
                 checked={targetDataIndex === index}
                 onChange={handleChangeTargetDataIndex}
+                className={css`
+                  font-size: 12px;
+                `}
               >
                 {name}
               </RadioButton>
