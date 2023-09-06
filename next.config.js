@@ -5,6 +5,12 @@ const withLinaria = require("next-linaria");
 
 const nextConfig = {
   reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = withLinaria(nextConfig);

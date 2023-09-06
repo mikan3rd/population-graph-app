@@ -4,11 +4,13 @@ import { HighchartsReact } from "highcharts-react-official";
 
 import { useIndex } from "./index.hook";
 
-import { Checkbox } from "@/components/ui/Checkbox";
-import { RadioButton } from "@/components/ui/RadioButton";
+import { LabelButtonList } from "@/components/features/Index/LabelButtonList";
+import { PrefectureCheckList } from "@/components/features/Index/PrefectureCheckList";
+import { Loading } from "@/components/ui/Loading";
 
 export const Index = () => {
   const {
+    isLoading,
     prefectures,
     labels,
     targetDataIndex,
@@ -16,6 +18,8 @@ export const Index = () => {
     handleChangeCheckedCode,
     handleChangeTargetDataIndex,
   } = useIndex();
+
+  if (isLoading) return <Loading isLoading={isLoading} />;
 
   return (
     <div
@@ -25,84 +29,22 @@ export const Index = () => {
     >
       <h1>population-graph-app</h1>
 
-      <div
+      <PrefectureCheckList
+        prefectures={prefectures}
+        handleChangeCheckedCode={handleChangeCheckedCode}
         className={css`
           margin-top: 32px;
         `}
-      >
-        <h2
-          className={css`
-            font-size: 18px;
-          `}
-        >
-          都道府県を選択してください（複数可）
-        </h2>
-        <div
-          className={css`
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(91px, 1fr));
-            gap: 8px;
-            margin-top: 8px;
-          `}
-        >
-          {prefectures.map((prefecture) => {
-            const { prefCode, prefName, checked } = prefecture;
-            return (
-              <Checkbox
-                key={prefCode}
-                id={`checkbox_pref_${prefCode}`}
-                checked={checked}
-                value={prefCode}
-                onChange={handleChangeCheckedCode}
-                className={css`
-                  font-size: 12px;
-                `}
-              >
-                {prefName}
-              </Checkbox>
-            );
-          })}
-        </div>
-      </div>
+      />
 
-      <div
+      <LabelButtonList
+        labels={labels}
+        targetDataIndex={targetDataIndex}
+        handleChangeTargetDataIndex={handleChangeTargetDataIndex}
         className={css`
           margin-top: 32px;
         `}
-      >
-        <h2
-          className={css`
-            font-size: 18px;
-          `}
-        >
-          表示するデータを選択してください
-        </h2>
-        <div
-          className={css`
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 8px;
-            margin-top: 8px;
-          `}
-        >
-          {labels.map((label) => {
-            const { index, name } = label;
-            return (
-              <RadioButton
-                key={index}
-                value={index}
-                checked={targetDataIndex === index}
-                onChange={handleChangeTargetDataIndex}
-                className={css`
-                  font-size: 12px;
-                `}
-              >
-                {name}
-              </RadioButton>
-            );
-          })}
-        </div>
-      </div>
+      />
 
       <div
         className={css`

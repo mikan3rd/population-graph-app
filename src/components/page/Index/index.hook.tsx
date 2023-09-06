@@ -16,15 +16,15 @@ export const useIndex = () => {
 
   const isInitialized = useRef(false);
 
-  const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
+  const { data: prefecturesData, isLoading } = trpc.getPrefectures.useQuery();
 
   const prefectures: CheckedPrefectureType[] = useMemo(
     () =>
-      prefecturesData.result.map((prefecture) => ({
+      prefecturesData?.result.map((prefecture) => ({
         ...prefecture,
         checked: checkedPrefCodes.has(prefecture.prefCode),
-      })),
-    [checkedPrefCodes, prefecturesData.result],
+      })) ?? [],
+    [checkedPrefCodes, prefecturesData?.result],
   );
 
   const populationsData = useGetPopulationsQueries(prefectures);
@@ -93,7 +93,7 @@ export const useIndex = () => {
   }, []);
 
   const handleChangeCheckedCode = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       const {
         target: { checked, value },
       } = event;
@@ -114,9 +114,11 @@ export const useIndex = () => {
   // 初回のみ都道府県のデータ取得時に最初と最後の都道府県のチェックをONにする
   useEffect(() => {
     if (isInitialized.current) return;
-    if (checkedPrefCodes.size > 0) return;
+
+    if (prefecturesData === undefined) return;
+
     const firstPrefCode = prefecturesData.result[0]?.prefCode;
-    const lastPrefCode = prefecturesData.result[prefecturesData.result.length - 1]?.prefCode;
+    const lastPrefCode = prefecturesData.result[prefecturesData?.result.length - 1]?.prefCode;
     if (firstPrefCode !== undefined) {
       handleSetCheckedPrefCodes({ prefCode: firstPrefCode, checked: true });
     }
@@ -124,9 +126,10 @@ export const useIndex = () => {
       handleSetCheckedPrefCodes({ prefCode: lastPrefCode, checked: true });
     }
     isInitialized.current = true;
-  }, [checkedPrefCodes.size, handleSetCheckedPrefCodes, prefecturesData.result]);
+  }, [prefecturesData, handleSetCheckedPrefCodes]);
 
   return {
+    isLoading,
     prefectures,
     labels,
     targetDataIndex,
