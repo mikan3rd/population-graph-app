@@ -114,10 +114,12 @@ export const useIndex = () => {
   // 初回のみ都道府県のデータ取得時に最初と最後の都道府県のチェックをONにする
   useEffect(() => {
     if (isInitialized.current) return;
-    if (checkedPrefCodes.size > 0) return;
+
     const { data } = getPrefecturesResult;
-    const firstPrefCode = data?.result[0]?.prefCode;
-    const lastPrefCode = data?.result[data?.result.length - 1]?.prefCode;
+    if (data === undefined) return;
+
+    const firstPrefCode = data.result[0]?.prefCode;
+    const lastPrefCode = data.result[data?.result.length - 1]?.prefCode;
     if (firstPrefCode !== undefined) {
       handleSetCheckedPrefCodes({ prefCode: firstPrefCode, checked: true });
     }
@@ -125,7 +127,7 @@ export const useIndex = () => {
       handleSetCheckedPrefCodes({ prefCode: lastPrefCode, checked: true });
     }
     isInitialized.current = true;
-  }, [checkedPrefCodes.size, getPrefecturesResult, handleSetCheckedPrefCodes]);
+  }, [getPrefecturesResult, handleSetCheckedPrefCodes]);
 
   return {
     prefectures,
