@@ -1,10 +1,10 @@
-import { css } from "@linaria/core";
+import { css, LinariaClassName } from "@linaria/core";
 
 import { CheckedPrefectureType } from "@/components/page/Index/useGetPopulationsQueries";
 import { Checkbox } from "@/components/ui/Checkbox";
 
 type Props = {
-  className?: string;
+  className?: LinariaClassName;
   prefectures: CheckedPrefectureType[];
   handleChangeCheckedCode: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

@@ -1,9 +1,9 @@
-import { css } from "@linaria/core";
+import { css, LinariaClassName } from "@linaria/core";
 
 import { RadioButton } from "@/components/ui/RadioButton";
 
 type Props = {
-  className?: string;
+  className?: LinariaClassName;
   labels: { index: number; name: string }[];
   targetDataIndex: number;
   handleChangeTargetDataIndex: (event: React.ChangeEvent<HTMLInputElement>) => void;
