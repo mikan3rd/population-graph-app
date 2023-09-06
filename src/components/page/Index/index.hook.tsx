@@ -16,7 +16,7 @@ export const useIndex = () => {
 
   const isInitialized = useRef(false);
 
-  const { data: prefecturesData } = trpc.getPrefectures.useQuery();
+  const { data: prefecturesData, isLoading } = trpc.getPrefectures.useQuery();
 
   const prefectures: CheckedPrefectureType[] = useMemo(
     () =>
@@ -129,6 +129,7 @@ export const useIndex = () => {
   }, [prefecturesData, handleSetCheckedPrefCodes]);
 
   return {
+    isLoading,
     prefectures,
     labels,
     targetDataIndex,

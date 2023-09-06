@@ -10,6 +10,7 @@ import { Loading } from "@/components/ui/Loading";
 
 export const Index = () => {
   const {
+    isLoading,
     prefectures,
     labels,
     targetDataIndex,
@@ -17,6 +18,8 @@ export const Index = () => {
     handleChangeCheckedCode,
     handleChangeTargetDataIndex,
   } = useIndex();
+
+  if (isLoading) return <Loading isLoading={isLoading} />;
 
   return (
     <div
@@ -26,26 +29,22 @@ export const Index = () => {
     >
       <h1>population-graph-app</h1>
 
-      {prefectures.length > 0 && (
-        <PrefectureCheckList
-          prefectures={prefectures}
-          handleChangeCheckedCode={handleChangeCheckedCode}
-          className={css`
-            margin-top: 32px;
-          `}
-        />
-      )}
+      <PrefectureCheckList
+        prefectures={prefectures}
+        handleChangeCheckedCode={handleChangeCheckedCode}
+        className={css`
+          margin-top: 32px;
+        `}
+      />
 
-      {labels.length > 0 && (
-        <LabelButtonList
-          labels={labels}
-          targetDataIndex={targetDataIndex}
-          handleChangeTargetDataIndex={handleChangeTargetDataIndex}
-          className={css`
-            margin-top: 32px;
-          `}
-        />
-      )}
+      <LabelButtonList
+        labels={labels}
+        targetDataIndex={targetDataIndex}
+        handleChangeTargetDataIndex={handleChangeTargetDataIndex}
+        className={css`
+          margin-top: 32px;
+        `}
+      />
 
       <div
         className={css`
@@ -54,8 +53,6 @@ export const Index = () => {
       >
         <HighchartsReact highcharts={Highcharts} options={highchartsOptions} />
       </div>
-
-      <Loading isLoading={prefectures.length === 0} />
     </div>
   );
 };
