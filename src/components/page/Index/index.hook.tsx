@@ -93,7 +93,7 @@ export const useIndex = () => {
   }, []);
 
   const handleChangeCheckedCode = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       const {
         target: { checked, value },
       } = event;
