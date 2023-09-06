@@ -6,7 +6,15 @@ images:
 steps:
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/population-graph-app:$COMMIT_SHA", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/$PROJECT_ID/population-graph-app:$COMMIT_SHA",
+        ".",
+        "--build-arg",
+        "RESAS_API_KEY=${_RESAS_API_KEY}",
+      ]
 
   # Push the container image to Container Registry
   - name: "gcr.io/cloud-builders/docker"
