@@ -16,15 +16,15 @@ export const useIndex = () => {
 
   const isInitialized = useRef(false);
 
-  const getPrefecturesResult = trpc.getPrefectures.useQuery();
+  const { data: prefecturesData } = trpc.getPrefectures.useQuery();
 
   const prefectures: CheckedPrefectureType[] = useMemo(
     () =>
-      getPrefecturesResult.data?.result.map((prefecture) => ({
+      prefecturesData?.result.map((prefecture) => ({
         ...prefecture,
         checked: checkedPrefCodes.has(prefecture.prefCode),
       })) ?? [],
-    [checkedPrefCodes, getPrefecturesResult.data?.result],
+    [checkedPrefCodes, prefecturesData?.result],
   );
 
   const populationsData = useGetPopulationsQueries(prefectures);
@@ -115,11 +115,10 @@ export const useIndex = () => {
   useEffect(() => {
     if (isInitialized.current) return;
 
-    const { data } = getPrefecturesResult;
-    if (data === undefined) return;
+    if (prefecturesData === undefined) return;
 
-    const firstPrefCode = data.result[0]?.prefCode;
-    const lastPrefCode = data.result[data?.result.length - 1]?.prefCode;
+    const firstPrefCode = prefecturesData.result[0]?.prefCode;
+    const lastPrefCode = prefecturesData.result[prefecturesData?.result.length - 1]?.prefCode;
     if (firstPrefCode !== undefined) {
       handleSetCheckedPrefCodes({ prefCode: firstPrefCode, checked: true });
     }
@@ -127,7 +126,7 @@ export const useIndex = () => {
       handleSetCheckedPrefCodes({ prefCode: lastPrefCode, checked: true });
     }
     isInitialized.current = true;
-  }, [getPrefecturesResult, handleSetCheckedPrefCodes]);
+  }, [prefecturesData, handleSetCheckedPrefCodes]);
 
   return {
     prefectures,
