@@ -16,15 +16,15 @@ export const useIndex = () => {
 
   const isInitialized = useRef(false);
 
-  const [prefecturesData] = trpc.getPrefectures.useSuspenseQuery();
+  const getPrefecturesResult = trpc.getPrefectures.useQuery();
 
   const prefectures: CheckedPrefectureType[] = useMemo(
     () =>
-      prefecturesData.result.map((prefecture) => ({
+      getPrefecturesResult.data?.result.map((prefecture) => ({
         ...prefecture,
         checked: checkedPrefCodes.has(prefecture.prefCode),
-      })),
-    [checkedPrefCodes, prefecturesData.result],
+      })) ?? [],
+    [checkedPrefCodes, getPrefecturesResult.data?.result],
   );
 
   const populationsData = useGetPopulationsQueries(prefectures);
@@ -115,8 +115,9 @@ export const useIndex = () => {
   useEffect(() => {
     if (isInitialized.current) return;
     if (checkedPrefCodes.size > 0) return;
-    const firstPrefCode = prefecturesData.result[0]?.prefCode;
-    const lastPrefCode = prefecturesData.result[prefecturesData.result.length - 1]?.prefCode;
+    const { data } = getPrefecturesResult;
+    const firstPrefCode = data?.result[0]?.prefCode;
+    const lastPrefCode = data?.result[data?.result.length - 1]?.prefCode;
     if (firstPrefCode !== undefined) {
       handleSetCheckedPrefCodes({ prefCode: firstPrefCode, checked: true });
     }
@@ -124,7 +125,7 @@ export const useIndex = () => {
       handleSetCheckedPrefCodes({ prefCode: lastPrefCode, checked: true });
     }
     isInitialized.current = true;
-  }, [checkedPrefCodes.size, handleSetCheckedPrefCodes, prefecturesData.result]);
+  }, [checkedPrefCodes.size, getPrefecturesResult, handleSetCheckedPrefCodes]);
 
   return {
     prefectures,
