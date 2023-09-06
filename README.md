@@ -1,6 +1,9 @@
 # Population Graph App
 
+demo: https://population-graph-app-3ay7xzjlrq-an.a.run.app
+
 ![lint Status](https://github.com/mikan3rd/population-graph-app/actions/workflows/lint.yaml/badge.svg?branch=main)
+![build Status](https://github.com/mikan3rd/population-graph-app/actions/workflows/build.yaml/badge.svg?branch=main)
 
 ## Tech Stack
 
