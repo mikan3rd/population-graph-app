@@ -34,7 +34,7 @@ export const PrefectureCheckList = (props: Props) => {
           return (
             <Checkbox
               key={prefCode}
-              id={`checkbox_pref_${prefCode}`}
+              id={`prefecture_check_list_${prefCode}`}
               checked={checked}
               value={prefCode}
               onChange={handleChangeCheckedCode}
