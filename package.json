@@ -15,7 +15,8 @@
     "lint-css": "stylelint src/**/* --fix",
     "lint-css:check": "stylelint src/**/* --max-warnings=0",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tanstack/react-query": "4.35.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@linaria/stylelint-config-standard-linaria": "4.5.1",
+    "@playwright/test": "1.37.1",
     "@typescript-eslint/eslint-plugin": "6.6.0",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
