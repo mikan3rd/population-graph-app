@@ -1,0 +1,41 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  playwright:
+    if: github.event.pull_request.draft == false
+    name: "Playwright Tests - ${{ matrix.project }} - Shard ${{ matrix.shard }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ["Desktop_Chrome", "Mobile_Chrome", "Mobile_Safari"]
+        shard: [1/1]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.1
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install browsers
+        run: npx playwright install --with-deps
+
+      - name: Run your tests
+        run: yarn test:e2e --project=${{ matrix.project }} --shard=${{ matrix.shard }}
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
