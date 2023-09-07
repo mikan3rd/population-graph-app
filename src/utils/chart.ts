@@ -25,11 +25,11 @@ export const generateColor = (num: number) => {
   return color;
 };
 
-const symbolArray: SymbolKeyValue[] = ["circle", "square", "diamond", "triangle", "triangle-down"];
+const symbolValues: SymbolKeyValue[] = ["circle", "square", "diamond", "triangle", "triangle-down"];
 
 export const generateSymbol = (num: number) => {
-  const index = num % symbolArray.length;
-  const symbol = symbolArray[index];
+  const index = num % symbolValues.length;
+  const symbol = symbolValues[index];
 
   if (symbol === undefined) {
     throw new Error("symbol is undefined");

@@ -7,7 +7,7 @@ import {
   CheckedPrefectureType,
 } from "./useGetPopulationsQueries";
 
-import { generateColor, generateSymbol } from "@/utils/Color";
+import { generateColor, generateSymbol } from "@/utils/chart";
 import { trpc } from "@/utils/trpc";
 
 export const useIndex = () => {
