@@ -33,6 +33,7 @@ export const LabelButtonList = (props: Props) => {
           return (
             <RadioButton
               key={index}
+              id={`label_button_list_${index}`}
               value={index}
               checked={targetDataIndex === index}
               onChange={handleChangeTargetDataIndex}

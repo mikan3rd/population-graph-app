@@ -7,7 +7,7 @@ import {
   CheckedPrefectureType,
 } from "./useGetPopulationsQueries";
 
-import { generateColors } from "@/utils/Color";
+import { generateColor, generateSymbol } from "@/utils/chart";
 import { trpc } from "@/utils/trpc";
 
 export const useIndex = () => {
@@ -59,7 +59,10 @@ export const useIndex = () => {
           id: `${prefCode}`,
           name: prefName,
           data: result.data[targetDataIndex]?.data.map((d) => [d.year, d.value]) ?? [],
-          color: generateColors(prefCode),
+          color: generateColor(prefCode),
+          marker: {
+            symbol: generateSymbol(prefCode),
+          },
           showInLegend: true,
         };
         return series;
