@@ -18,19 +18,19 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "Desktop Chrome",
+      name: "Desktop_Chrome",
       use: {
         ...devices["Desktop Chrome"],
       },
     },
     {
-      name: "Mobile Chrome",
+      name: "Mobile_Chrome",
       use: {
         ...devices["Pixel 5"],
       },
     },
     {
-      name: "Mobile Safari",
+      name: "Mobile_Safari",
       use: devices["iPhone 12"],
     },
   ],
