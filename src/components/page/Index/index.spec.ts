@@ -1,4 +1,8 @@
-import { test, expect } from "../../../mocks/handlers";
+import { test, expect } from "next/experimental/testmode/playwright/msw";
+
+import "../../../mocks/setup";
+import { getPopulation } from "../../../mocks/handlers/getPopulation";
+import { getPrefectures } from "../../../mocks/handlers/getPrefectures";
 
 test.describe("Index page", () => {
   test.beforeEach(async ({ page }) => {
@@ -10,9 +14,15 @@ test.describe("Index page", () => {
     await expect(heading).toBeVisible();
   });
 
-  test("render 47 prefectures", async ({ page }) => {
-    await page.waitForSelector("h2");
+  test("render checkboxes for 47 prefectures", async ({ page }) => {
+    await page.waitForResponse(`${getPrefectures.path}*`);
     const checkboxList = await page.$$('[type="checkbox"]');
     await expect(checkboxList).toHaveLength(47);
+  });
+
+  test("render chart label radio buttons", async ({ page }) => {
+    await page.waitForResponse(`${getPopulation.path}*`);
+    const radioList = await page.$$('[type="radio"]');
+    await expect(radioList).toHaveLength(4);
   });
 });
