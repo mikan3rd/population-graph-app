@@ -1,6 +1,6 @@
 import { rest } from "next/experimental/testmode/playwright/msw";
 
-export const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
 
 export const Response = {
   message: null,
