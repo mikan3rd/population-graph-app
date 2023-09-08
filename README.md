@@ -14,6 +14,7 @@ demo: https://population-graph-app-3ay7xzjlrq-an.a.run.app
 - [TanStack Query](https://tanstack.com/query/)
 - [Zod](https://zod.dev/)
 - [Linaria](https://linaria.dev/)
+- [Playwright](https://playwright.dev/)
 
 ## Getting Started
 

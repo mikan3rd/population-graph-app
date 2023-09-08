@@ -1,14 +1,13 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from "next/experimental/testmode/playwright";
 
 const PORT = process.env.PORT || 3000;
 const baseURL = `http://localhost:${PORT}`;
 
 export default defineConfig({
   timeout: 30 * 1000,
-  retries: 2,
   outputDir: "test-results/",
   webServer: {
-    command: "yarn dev",
+    command: "yarn start --experimental-test-proxy",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
