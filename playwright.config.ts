@@ -1,4 +1,4 @@
-import { defineConfig, devices } from "next/experimental/testmode/playwright";
+import { defineConfig, devices } from "next/experimental/testmode/playwright/msw";
 
 const PORT = process.env.PORT || 3000;
 const baseURL = `http://localhost:${PORT}`;
