@@ -13,13 +13,17 @@ test.describe("Index page", () => {
   });
 
   test("render checkboxes for 47 prefectures", async ({ page }) => {
-    await page.waitForSelector("h2");
+    const heading = await page.getByRole("heading", { name: "都道府県を選択してください（複数可）" });
+    await expect(heading).toBeVisible();
+
     const checkboxList = await page.$$('[type="checkbox"]');
     await expect(checkboxList).toHaveLength(47);
   });
 
   test("render chart label radio buttons", async ({ page }) => {
-    await page.waitForSelector("h2");
+    const heading = await page.getByRole("heading", { name: "表示するデータを選択してください" });
+    await expect(heading).toBeVisible();
+
     const radioList = await page.$$('[type="radio"]');
     await expect(radioList).toHaveLength(4);
   });

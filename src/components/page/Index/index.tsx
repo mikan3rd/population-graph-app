@@ -37,14 +37,16 @@ export const Index = () => {
         `}
       />
 
-      <LabelButtonList
-        labels={labels}
-        targetDataIndex={targetDataIndex}
-        handleChangeTargetDataIndex={handleChangeTargetDataIndex}
-        className={css`
-          margin-top: 32px;
-        `}
-      />
+      {labels.length > 0 && (
+        <LabelButtonList
+          labels={labels}
+          targetDataIndex={targetDataIndex}
+          handleChangeTargetDataIndex={handleChangeTargetDataIndex}
+          className={css`
+            margin-top: 32px;
+          `}
+        />
+      )}
 
       <div
         className={css`
