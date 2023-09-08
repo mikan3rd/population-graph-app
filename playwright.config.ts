@@ -8,7 +8,7 @@ export default defineConfig({
   retries: 2,
   outputDir: "test-results/",
   webServer: {
-    command: "yarn dev",
+    command: "yarn start",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
