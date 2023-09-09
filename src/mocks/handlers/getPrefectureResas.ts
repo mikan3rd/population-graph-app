@@ -197,5 +197,5 @@ export const response = {
 };
 
 export const getPrefecturesResas = rest.get(path, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(Response));
+  return res(ctx.status(200), ctx.json(response));
 });
