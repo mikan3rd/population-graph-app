@@ -194,8 +194,8 @@ export const response = {
       prefName: "沖縄県",
     },
   ],
-} as const;
+};
 
 export const getPrefecturesResas = rest.get(path, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(Response));
+  return res(ctx.status(200), ctx.json(response));
 });

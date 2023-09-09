@@ -295,8 +295,8 @@ export const response = {
       },
     ],
   },
-} as const;
+};
 
 export const getPopulationResas = rest.get(path, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(Response));
+  return res(ctx.status(200), ctx.json(response));
 });
