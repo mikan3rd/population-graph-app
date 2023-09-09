@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
 
-export const Response = {
+export const response = {
   message: null,
   result: [
     {
@@ -194,7 +194,7 @@ export const Response = {
       prefName: "沖縄県",
     },
   ],
-};
+} as const;
 
 export const getPrefecturesResas = rest.get(path, (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(Response));
