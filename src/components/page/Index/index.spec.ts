@@ -1,6 +1,6 @@
 import { test, expect } from "next/experimental/testmode/playwright/msw";
 
-import "../../../mocks/setup";
+import "../../../mocks/setupTest";
 
 test.describe("Index page", () => {
   test.beforeEach(async ({ page }) => {

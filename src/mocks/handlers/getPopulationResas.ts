@@ -1,4 +1,4 @@
-import { rest } from "next/experimental/testmode/playwright/msw";
+import { rest } from "msw";
 
 const path = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear";
 

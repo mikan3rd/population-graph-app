@@ -7,6 +7,10 @@ import type { AppType } from "next/app";
 import "@/styles/globals";
 import { trpc } from "@/utils/trpc";
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+  require("../mocks/setup");
+}
+
 if (typeof window !== `undefined`) {
   HighchartsAccessibility(Highcharts);
   HighchartsExporting(Highcharts);

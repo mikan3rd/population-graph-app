@@ -51,5 +51,8 @@
     "msw-trpc": "1.3.4",
     "prettier": "3.0.3",
     "stylelint": "15.10.3"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
