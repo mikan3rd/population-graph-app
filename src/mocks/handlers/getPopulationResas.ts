@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 const path = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear";
 
-export const Response = {
+export const response = {
   message: null,
   result: {
     boundaryYear: 2020,
