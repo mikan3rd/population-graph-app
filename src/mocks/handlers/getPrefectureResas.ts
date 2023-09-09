@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
 
-export const response = {
+export const Response = {
   message: null,
   result: [
     {
