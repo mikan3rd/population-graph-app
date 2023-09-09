@@ -1,6 +1,6 @@
 import { rest } from "msw";
 
-const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures" as const;
 
 export const response = {
   message: null,

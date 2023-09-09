@@ -7,7 +7,7 @@ import type { AppType } from "next/app";
 import "@/styles/globals";
 import { trpc } from "@/utils/trpc";
 
-if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+if (process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   require("../mocks/setup");
 }
 
