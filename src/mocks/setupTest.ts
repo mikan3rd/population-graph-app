@@ -1,12 +1,10 @@
-import { setupWorker } from "msw";
-import { setupServer } from "msw/node";
+import { test, setupWorker } from "next/experimental/testmode/playwright/msw";
 
 import { handlers } from "./handlers";
 
 async function initMocks() {
   if (typeof window === "undefined") {
-    const server = setupServer(...handlers);
-    server.listen();
+    // pass
   } else {
     const worker = setupWorker(...handlers);
     worker.start();
@@ -14,3 +12,7 @@ async function initMocks() {
 }
 
 initMocks();
+
+test.use({
+  mswHandlers: handlers,
+});
