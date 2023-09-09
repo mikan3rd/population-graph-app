@@ -1,9 +1,13 @@
 # Population Graph App
 
-demo: https://population-graph-app-3ay7xzjlrq-an.a.run.app
-
 ![lint Status](https://github.com/mikan3rd/population-graph-app/actions/workflows/lint.yaml/badge.svg?branch=main)
 ![build Status](https://github.com/mikan3rd/population-graph-app/actions/workflows/build.yaml/badge.svg?branch=main)
+
+## Demo
+
+https://population-graph-app-3ay7xzjlrq-an.a.run.app
+
+Since the minimum number of instances is set to 0, the server will take a few seconds to start up if it has not been accessed for a while.
 
 ## Tech Stack
 

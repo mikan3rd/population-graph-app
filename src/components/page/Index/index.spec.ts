@@ -37,8 +37,12 @@ test.describe("Index page", () => {
       const checkboxList = await page.locator(checkboxSelector).all();
       await expect(checkboxList).toHaveLength(prefecturesNumber);
 
-      const checkedCheckboxList = await page.locator(checkedCheckboxSelector).all();
-      await expect(checkedCheckboxList).toHaveLength(initialCheckedNumber);
+      await page.waitForFunction(
+        ({ checkedCheckboxSelector, initialCheckedNumber }) => {
+          return document.querySelectorAll(checkedCheckboxSelector).length === initialCheckedNumber;
+        },
+        { checkedCheckboxSelector, initialCheckedNumber },
+      );
     });
 
     test("render radio buttons for 4 labels", async ({ page }) => {
