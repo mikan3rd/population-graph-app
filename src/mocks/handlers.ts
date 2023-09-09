@@ -1,4 +1,4 @@
-import { RequestHandler } from "next/experimental/testmode/playwright/msw";
+import { RequestHandler } from "msw";
 
 import { getPopulationResas } from "./handlers/getPopulationResas";
 import { getPrefecturesResas } from "./handlers/getPrefectureResas";
