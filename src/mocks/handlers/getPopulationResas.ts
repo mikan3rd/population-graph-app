@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-const path = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear";
+const path = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear" as const;
 
-export const Response = {
+export const response = {
   message: null,
   result: {
     boundaryYear: 2020,
@@ -298,5 +298,5 @@ export const Response = {
 };
 
 export const getPopulationResas = rest.get(path, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(Response));
+  return res(ctx.status(200), ctx.json(response));
 });

@@ -1,7 +1,9 @@
-import { Response } from "./getPrefectureResas";
+import { rest } from "msw";
 
-import { trpcMsw } from ".";
+import { response } from "./getPrefectureResas";
 
-export const getPrefectures = trpcMsw.getPrefectures.query((req, res, ctx) => {
-  return res(ctx.status(200), ctx.data(Response));
+const path = "/api/trpc/getPrefectures" as const;
+
+export const getPrefectures = rest.get(path, (req, res, ctx) => {
+  return res(ctx.status(200), ctx.json({ result: { data: response } }));
 });

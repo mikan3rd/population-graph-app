@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+const path = "https://opendata.resas-portal.go.jp/api/v1/prefectures" as const;
 
-export const Response = {
+export const response = {
   message: null,
   result: [
     {
@@ -197,5 +197,5 @@ export const Response = {
 };
 
 export const getPrefecturesResas = rest.get(path, (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(Response));
+  return res(ctx.status(200), ctx.json(response));
 });

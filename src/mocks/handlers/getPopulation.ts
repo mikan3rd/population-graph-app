@@ -1,7 +1,9 @@
-import { Response } from "./getPopulationResas";
+import { rest } from "msw";
 
-import { trpcMsw } from ".";
+import { response } from "./getPopulationResas";
 
-export const getPopulation = trpcMsw.getPopulation.query((req, res, ctx) => {
-  return res(ctx.status(200), ctx.data(Response));
+const path = "/api/trpc/getPopulation" as const;
+
+export const getPopulation = rest.get(path, (req, res, ctx) => {
+  return res(ctx.status(200), ctx.json({ result: { data: response } }));
 });
