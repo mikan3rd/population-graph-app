@@ -17,7 +17,7 @@ export default defineConfig({
     baseURL,
     trace: "retry-with-trace",
     screenshot: {
-      mode: "on",
+      mode: "only-on-failure",
       fullPage: true,
     },
   },
