@@ -69,9 +69,6 @@ test.describe("Index page", () => {
         },
         { highchartsSeriesSelector, initialCheckedNumber },
       );
-
-      const seriesList = await page.locator(highchartsSeriesSelector).all();
-      await expect(seriesList).toHaveLength(initialCheckedNumber);
     });
   });
 
@@ -188,6 +185,19 @@ test.describe("Index page", () => {
 
       const chartTitle2 = await page.locator(highchartsTitleSelector).first().textContent();
       expect(chartTitle).not.toBe(chartTitle2);
+    });
+  });
+
+  test.describe("visual regression", () => {
+    test("initial render", async ({ page }) => {
+      await page.waitForFunction(
+        ({ highchartsSeriesSelector, initialCheckedNumber }) => {
+          return document.querySelectorAll(highchartsSeriesSelector).length === initialCheckedNumber;
+        },
+        { highchartsSeriesSelector, initialCheckedNumber },
+      );
+
+      expect(await page.screenshot()).toMatchSnapshot();
     });
   });
 });
