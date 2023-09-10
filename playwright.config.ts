@@ -6,6 +6,7 @@ const baseURL = `http://localhost:${PORT}`;
 export default defineConfig({
   timeout: 30 * 1000,
   outputDir: "test-results/",
+  reporter: process.env.CI ? "blob" : "html",
   retries: !process.env.CI ? 0 : 2,
   webServer: {
     command: "yarn start --experimental-test-proxy",
