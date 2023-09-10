@@ -16,6 +16,10 @@ export default defineConfig({
   use: {
     baseURL,
     trace: "retry-with-trace",
+    screenshot: {
+      mode: "on",
+      fullPage: true,
+    },
   },
   projects: [
     {
