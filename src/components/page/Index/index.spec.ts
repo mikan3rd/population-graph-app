@@ -197,6 +197,7 @@ test.describe("Index page", () => {
         { highchartsSeriesSelector, initialCheckedNumber },
       );
 
+      await page.waitForTimeout(1000);
       expect(await page.screenshot({ fullPage: true })).toMatchSnapshot();
     });
   });
