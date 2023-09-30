@@ -257,7 +257,7 @@
     chalk "^2.4.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.22.15", "@babel/parser@^7.22.7":
+"@babel/parser@^7.22.15":
   version "7.22.16"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.16.tgz#180aead7f247305cce6551bea2720934e2fa2c95"
   integrity sha512-+gPfKv8UWeKKeJTUxe59+OobVcrYHETCsORl61EmSkmgymguYk/X5bp7GuUIXaFsc6y++v8ZxPsLSSuujqDphA==
@@ -1121,14 +1121,14 @@
     debug "^4.1.1"
     picocolors "^1.0.0"
 
-"@linaria/postcss-linaria@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@linaria/postcss-linaria/-/postcss-linaria-4.5.1.tgz#d52e48c11481418dc8814933a4552ca7f5ad1408"
-  integrity sha512-2On1OVLIcgrRAp5jzcYvRLdndK7HxKgXWshpmSWv1bkwmIRbTtE4vRixWZq19qE5tvR6HXlmxvwM4UW6YHM84g==
+"@linaria/postcss-linaria@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@linaria/postcss-linaria/-/postcss-linaria-5.0.0.tgz#d8e2bf4717984d8dc8dd44193867babb8bd7819c"
+  integrity sha512-xcekMe6qVHcY0Vike/MeWYAsQDOY8CTGNtpWVgelBSGuBCGmOqHxVUAfnhEtXgLuYIzi0dohkc85xSvyXQT5Eg==
   dependencies:
-    "@babel/generator" "^7.22.9"
-    "@babel/parser" "^7.22.7"
-    "@babel/traverse" "^7.22.8"
+    "@babel/generator" "^7.22.15"
+    "@babel/parser" "^7.22.15"
+    "@babel/traverse" "^7.22.15"
     stylelint "^14.11.0"
 
 "@linaria/react@^4.5.4":
@@ -1178,12 +1178,12 @@
     babel-plugin-transform-react-remove-prop-types "^0.4.24"
     ts-invariant "^0.10.3"
 
-"@linaria/stylelint-config-standard-linaria@4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@linaria/stylelint-config-standard-linaria/-/stylelint-config-standard-linaria-4.5.1.tgz#b0d1ad44ba01c023fd893132229af106e8e8d7a3"
-  integrity sha512-JL8txq2ft4VrZVU+wVKUJxua1Cal69wXKpHyVAV6QE5Mn0BDUnk/ksHRBVtWfv/sq6LTrLk39TDve6eI337nYg==
+"@linaria/stylelint-config-standard-linaria@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@linaria/stylelint-config-standard-linaria/-/stylelint-config-standard-linaria-5.0.0.tgz#0a0b432cfc02cd9e618911c4dd2f9017ea3d76f4"
+  integrity sha512-NPE6awEFcExFE2m+9h1qzr9ZyeSgUje0S92RO9E4m1Q9GNMoAsXpnxx+jsHmlcHktLommPzsAPL7EEKMWCxX9A==
   dependencies:
-    "@linaria/postcss-linaria" "^4.5.1"
+    "@linaria/postcss-linaria" "^5.0.0"
     stylelint "^14.11.0"
     stylelint-config-standard "^28.0.0"
 
