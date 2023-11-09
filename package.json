@@ -30,7 +30,7 @@
     "axios": "1.5.0",
     "highcharts": "11.1.0",
     "highcharts-react-official": "3.2.1",
-    "linaria": "4.5.4",
+    "linaria": "5.0.5",
     "msw": "1.3.0",
     "next": "13.4.19",
     "next-linaria": "0.11.0",
