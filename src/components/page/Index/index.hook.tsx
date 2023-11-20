@@ -1,4 +1,6 @@
 import { Options, SeriesLineOptions } from "highcharts";
+// eslint-disable-next-line import/no-named-as-default
+import HighchartsReact from "highcharts-react-official";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
@@ -15,6 +17,7 @@ export const useIndex = () => {
   const [targetDataIndex, setTargetDataIndex] = useState<number>(0);
 
   const isInitialized = useRef(false);
+  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
   const { data: prefecturesData, isLoading } = trpc.getPrefectures.useQuery();
 
@@ -28,6 +31,8 @@ export const useIndex = () => {
   );
 
   const populationsData = useGetPopulationsQueries(prefectures);
+
+  const isFetching = useMemo(() => populationsData.some(({ isFetching }) => isFetching), [populationsData]);
 
   const checkedPopulations = useMemo(() => {
     const checkedPopulations: Exclude<GetPopulationQueryResultType["data"], undefined>[] = [];
@@ -77,7 +82,14 @@ export const useIndex = () => {
       yAxis: { title: { text: "人口" } },
       series: highchartsSeries,
       credits: { enabled: false },
-      lang: { noData: "都道府県を選択してください" },
+      lang: {
+        noData: "都道府県を選択してください",
+        loading: "データ取得中...",
+      },
+      loading: {
+        hideDuration: 1000,
+        showDuration: 1000,
+      },
     };
     return options;
   }, [highchartsSeries, targetLabel]);
@@ -131,12 +143,23 @@ export const useIndex = () => {
     isInitialized.current = true;
   }, [prefecturesData, handleSetCheckedPrefCodes]);
 
+  // データ取得中にローディングを表示する
+  useEffect(() => {
+    const chart = chartComponentRef.current?.chart;
+    if (isFetching) {
+      chart?.showLoading();
+    } else {
+      chart?.hideLoading();
+    }
+  }, [isFetching]);
+
   return {
     isLoading,
     prefectures,
     labels,
     targetDataIndex,
     highchartsOptions,
+    chartComponentRef,
     handleChangeCheckedCode,
     handleChangeTargetDataIndex,
   };
