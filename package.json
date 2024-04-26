@@ -40,7 +40,7 @@
     "zod": "3.22.2"
   },
   "devDependencies": {
-    "@linaria/stylelint-config-standard-linaria": "4.5.1",
+    "@linaria/stylelint-config-standard-linaria": "6.2.0",
     "@playwright/test": "1.37.1",
     "@typescript-eslint/eslint-plugin": "6.6.0",
     "eslint": "8.48.0",
