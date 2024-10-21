@@ -42,7 +42,7 @@
   "devDependencies": {
     "@linaria/stylelint-config-standard-linaria": "4.5.1",
     "@playwright/test": "1.37.1",
-    "@typescript-eslint/eslint-plugin": "6.6.0",
+    "@typescript-eslint/eslint-plugin": "8.11.0",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",
